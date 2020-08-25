@@ -14,10 +14,12 @@ import {
   MatSelectModule,
   MatToolbarModule
 } from '@angular/material';
+import { SearchPageComponent } from './search-page/search-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SearchPageComponent
   ],
   imports: [
     BrowserModule,

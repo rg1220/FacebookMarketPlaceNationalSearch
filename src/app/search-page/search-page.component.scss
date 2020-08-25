@@ -1,0 +1,22 @@
+@import "~@angular/material/theming";
+$primaryPalette: mat-palette($mat-pink);
+
+.nav-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+mat-card {
+  width: 80%;
+  margin: auto;
+
+  margin-top: 50px;
+}
+
+.primary-color {
+  color: mat-color($primaryPalette);
+}

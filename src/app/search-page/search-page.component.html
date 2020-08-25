@@ -1,0 +1,53 @@
+<nav class="nav-bar mat-elevation-z6">
+  <mat-toolbar color="primary" class="mat-elevation-z6">
+    <mat-icon>facebook</mat-icon>acebook Marketplace Search
+  </mat-toolbar>
+</nav>
+<div style="padding-top: 64px">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <mat-card>
+      <mat-card-title>Search Parameters</mat-card-title>
+      <mat-card-content>
+        <div style="margin-top: 20px;">
+          Search across all Facebook marketplaces. A new tab will be opened for each year and marketplace.
+        </div>
+
+        <div style="margin-top: 20px">
+          <mat-form-field style="width: 100%;">
+            <mat-label>Search String</mat-label>
+            <input matInput required formControlName="search" />
+          </mat-form-field>
+          <div style="font-size: 12px;padding-bottom: 10px;position:relative;top:-5px;">
+            <span class="primary-color">{{ '{YEAR}' }}</span> is automatically replaced with the year when opening each new tab.
+          </div>
+        </div>
+
+        <div style="flex-direction: row; margin-top: 15px;">
+          <mat-form-field>
+            <mat-label>Min Year</mat-label>
+            <input matInput type="number" required formControlName="minYear" />
+          </mat-form-field>
+
+          <mat-form-field style="margin-left: 15px;">
+            <mat-label>Max Year</mat-label>
+            <input matInput type="number" required formControlName="maxYear" />
+          </mat-form-field>
+        </div>
+
+        <div style="margin-top: 15px;">
+          <mat-form-field style="width: 100%;">
+            <mat-label>Markets</mat-label>
+            <mat-select required [formControl]="marketsFormControl" multiple>
+              <mat-option *ngFor="let market of marketOptions" [value]="market">{{market}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" style="margin-top: 5px" [disabled]="!form.valid">
+          Search
+          <mat-icon style="font-size: 15px; line-height: 24px;">open_in_new</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
