@@ -38,7 +38,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   submit() {
-    if (this.form.valid) {
+    if (!this.form.valid) {
       return;
     }
 
