@@ -32,7 +32,7 @@ export class SearchPageComponent implements OnInit {
     this.form = this.fb.group({
       search: ['{YEAR} BMW M3', [Validators.required]],
       markets: this.marketsFormControl,
-      minYear: [2008, [Validators.required]],
+      minYear: [2009, [Validators.required]],
       maxYear: [2013, [Validators.required]]
     });
   }

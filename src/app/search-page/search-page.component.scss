@@ -20,3 +20,15 @@ mat-card {
 .primary-color {
   color: mat-color($primaryPalette);
 }
+
+a {
+  color: #ddd;
+
+  &:hover {
+    color: #bbb;
+  }
+
+  &:active {
+    color: #fff;
+  }
+}
