@@ -37,6 +37,11 @@ export class SearchPageComponent implements OnInit {
     });
   }
 
+  getTabCount() {
+    const { markets, minYear, maxYear } = this.form.getRawValue();
+    return Math.max(maxYear - minYear + 1, 0) * markets.length;
+  }
+
   submit() {
     if (!this.form.valid) {
       return;
@@ -54,6 +59,6 @@ export class SearchPageComponent implements OnInit {
 
   createLink(search: string, market: string, year: number) {
     const query = encodeURI(search.replace(/\{year\}/ig, `${year}`));
-    return `https://www.facebook.com/marketplace/${market}/search?query=${query}`;
+    return `https://www.facebook.com/marketplace/${market}/search/?query=${query}`;
   }
 }

@@ -27,12 +27,12 @@
         <div style="flex-direction: row; margin-top: 15px;">
           <mat-form-field>
             <mat-label>Min Year</mat-label>
-            <input matInput type="number" required formControlName="minYear" />
+            <input matInput type="number" min="1900" max="2030" required formControlName="minYear" />
           </mat-form-field>
 
           <mat-form-field style="margin-left: 15px;">
             <mat-label>Max Year</mat-label>
-            <input matInput type="number" required formControlName="maxYear" />
+            <input matInput type="number" min="1900" max="2030" required formControlName="maxYear" />
           </mat-form-field>
         </div>
 
@@ -46,7 +46,7 @@
         </div>
 
         <button mat-raised-button color="primary" type="submit" style="margin-top: 5px" [disabled]="!form.valid">
-          Search
+          Open {{ getTabCount() }} Tabs
           <mat-icon style="font-size: 15px; line-height: 24px;">open_in_new</mat-icon>
         </button>
       </mat-card-content>

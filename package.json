@@ -7,7 +7,8 @@
     "build": "ng build --prod --baseHref=/FacebookMarketPlaceNationalSearch/",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "publish": "cd ./dist/FacebookMarketPlaceNationalSearch && git init && git add * && git commit -m=Publish && git checkout -b published && git remote add origin https://github.com/rg1220/FacebookMarketPlaceNationalSearch && git push -f -u origin published"
   },
   "private": true,
   "dependencies": {
