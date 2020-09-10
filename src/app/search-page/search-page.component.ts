@@ -93,7 +93,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   }
 
   createLink(search: string, market: string, year: number, minPrice: number, maxPrice: number) {
-    const query = encodeURI(search.replace(/\{year\}/ig, `${year}`));
+    const query = search.replace(/\{year\}/ig, `${year}`);
 
     let params = new HttpParams({});
     params = params.set('query', query);
