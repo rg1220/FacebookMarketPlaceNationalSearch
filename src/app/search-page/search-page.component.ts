@@ -37,7 +37,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       minYear: [2009, [Validators.required]],
       maxYear: [2013, [Validators.required]],
       minPrice: [null],
-      maxPrice: [null]
+      maxPrice: [null],
+      daysSinceListed: [1]
     });
 
     this.form.controls.search.valueChanges.pipe(
@@ -77,22 +78,22 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const { search, markets, minYear, maxYear, minPrice, maxPrice } = this.form.getRawValue();
+    const { search, markets, minYear, maxYear, minPrice, maxPrice, daysSinceListed } = this.form.getRawValue();
 
     markets.forEach((market) => {
       if (search.search(/\{year\}/ig) === -1) {
-        const url = this.createLink(search, market, 0, minPrice, maxPrice);
+        const url = this.createLink(search, market, 0, minPrice, maxPrice, daysSinceListed);
         window.open(url, '_blank');
       } else {
         for (let year = minYear; year <= maxYear; year++) {
-          const url = this.createLink(search, market, year, minPrice, maxPrice);
+          const url = this.createLink(search, market, year, minPrice, maxPrice, daysSinceListed);
           window.open(url, '_blank');
         }
       }
     });
   }
 
-  createLink(search: string, market: string, year: number, minPrice: number, maxPrice: number) {
+  createLink(search: string, market: string, year: number, minPrice: number, maxPrice: number, daysSinceListed: number) {
     const query = search.replace(/\{year\}/ig, `${year}`);
 
     let params = new HttpParams({});
@@ -104,6 +105,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
     if (maxPrice) {
       params = params.set('maxPrice', `${maxPrice}`);
+    }
+
+    if (daysSinceListed) {
+      params = params.set('daysSinceListed', `${daysSinceListed}`);
     }
 
     return `https://www.facebook.com/marketplace/${market}/search/?${params.toString()}`;
