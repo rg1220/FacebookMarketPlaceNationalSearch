@@ -1,0 +1,10 @@
+<nav class="nav-bar mat-elevation-z6">
+  <mat-toolbar color="primary" class="mat-elevation-z6">
+    <mat-icon>facebook</mat-icon>acebook Marketplace Search
+  </mat-toolbar>
+</nav>
+<div class="content">
+  <a [href]="link$ | async" mat-raised-button color="primary">
+    {{ text$ | async }}
+  </a>
+</div>

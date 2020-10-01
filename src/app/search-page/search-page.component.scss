@@ -10,6 +10,13 @@ $primaryPalette: mat-palette($mat-pink);
   z-index: 2;
 }
 
+.content {
+  padding-top: 64px;
+  min-height: calc(100vh - 64px);
+  box-sizing: border-box;
+}
+
+
 mat-card {
   width: 80%;
   margin: auto;

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { distinctUntilChanged, map, shareReplay, startWith, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { concatMap, delay, distinctUntilChanged, map, shareReplay, startWith, takeUntil } from 'rxjs/operators';
+import { from, of, Subject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
@@ -80,37 +80,70 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
     const { search, markets, minYear, maxYear, minPrice, maxPrice, daysSinceListed } = this.form.getRawValue();
 
+    const delayBetweenTabs = 0;
+    const urls = [];
+
     markets.forEach((market) => {
+      let redirectDelay = 0;
       if (search.search(/\{year\}/ig) === -1) {
-        const url = this.createLink(search, market, 0, minPrice, maxPrice, daysSinceListed);
-        window.open(url, '_blank');
+        urls.push(this.createLink(search, market, 0, minPrice, maxPrice, daysSinceListed, (redirectDelay++ * delayBetweenTabs)));
       } else {
         for (let year = minYear; year <= maxYear; year++) {
-          const url = this.createLink(search, market, year, minPrice, maxPrice, daysSinceListed);
-          window.open(url, '_blank');
+          urls.push(this.createLink(search, market, year, minPrice, maxPrice, daysSinceListed, (redirectDelay++ * delayBetweenTabs)));
         }
       }
     });
+
+    const groupsOf = 2;
+    const urlGroups: string[][] = [];
+    while (urls.length > 0) {
+      urlGroups.push(urls.splice(0, groupsOf));
+    }
+
+    from(urlGroups).pipe(
+      concatMap((urlGroup) =>
+        of(urlGroup).pipe(delay(2000))
+      ),
+      takeUntil(this.finished$)
+    )
+      .subscribe((urlGroup: string[]) => {
+        urlGroup.forEach((url) => {
+          window.open(url, '_blank');
+        });
+      });
   }
 
-  createLink(search: string, market: string, year: number, minPrice: number, maxPrice: number, daysSinceListed: number) {
+  createLink(search: string,
+             market: string,
+             year: number,
+             minPrice: number,
+             maxPrice: number,
+             daysSinceListed: number,
+             redirectDelay: number) {
     const query = search.replace(/\{year\}/ig, `${year}`);
 
-    let params = new HttpParams({});
-    params = params.set('query', query);
+    const queryParams: any = {
+      query
+    };
 
     if (minPrice) {
-      params = params.set('minPrice', `${minPrice}`);
+      queryParams.minPrice = `${minPrice}`;
     }
 
     if (maxPrice) {
-      params = params.set('maxPrice', `${maxPrice}`);
+      queryParams.maxPrice = `${maxPrice}`;
     }
 
     if (daysSinceListed) {
-      params = params.set('daysSinceListed', `${daysSinceListed}`);
+      queryParams.daysSinceListed = `${daysSinceListed}`;
     }
 
-    return `https://www.facebook.com/marketplace/${market}/search/?${params.toString()}`;
+    let params = new HttpParams({});
+    params = params.set('redirectDelay', `${redirectDelay}`);
+    params = params.set('site', 'facebook');
+    params = params.set('market', market);
+    params = params.set('queryParams', JSON.stringify(queryParams));
+
+    return `/redirect?${params.toString()}`;
   }
 }

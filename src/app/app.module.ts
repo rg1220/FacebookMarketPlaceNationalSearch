@@ -15,11 +15,13 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import { SearchPageComponent } from './search-page/search-page.component';
+import { RedirectPageComponent } from './redirect-page/redirect-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchPageComponent
+    SearchPageComponent,
+    RedirectPageComponent
   ],
   imports: [
     BrowserModule,
