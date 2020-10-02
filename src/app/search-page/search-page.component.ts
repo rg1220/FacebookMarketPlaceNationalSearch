@@ -109,9 +109,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     )
       .subscribe((urlGroup: string[]) => {
         urlGroup.forEach((urlPath) => {
-          const url = this.router.createUrlTree([urlPath]);
-          window.open(url.toString(), '_blank');
-          // window.open(url, '_blank');
+          const parts = urlPath.split('?');
+          console.log([parts[0]]);
+          console.log([parts[1]]);
+          const url = this.router.createUrlTree([parts[0]]);
+          console.log(url.toString() + '?' + parts[1]);
+          window.open(url.toString() + '?' + parts[1], '_blank');
         });
       });
   }
@@ -147,6 +150,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     params = params.set('market', market);
     params = params.set('queryParams', JSON.stringify(queryParams));
 
-    return `/redirect?${params.toString()}`;
+    return `/FacebookMarketPlaceNationalSearch/redirect?${params.toString()}`;
   }
 }
