@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { concatMap, delay, distinctUntilChanged, map, shareReplay, startWith, takeUntil } from 'rxjs/operators';
 import { from, of, Subject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-page',
@@ -25,7 +26,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   private finished$ = new Subject();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit() {
     this.marketsFormControl = new FormControl();
@@ -107,8 +108,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       takeUntil(this.finished$)
     )
       .subscribe((urlGroup: string[]) => {
-        urlGroup.forEach((url) => {
-          window.open(url, '_blank');
+        urlGroup.forEach((urlPath) => {
+          const url = this.router.createUrlTree([urlPath]);
+          window.open(url.toString(), '_blank');
+          // window.open(url, '_blank');
         });
       });
   }
