@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prepublish": "npm run build",
-    "publish": "cd ./dist/FacebookMarketPlaceNationalSearch && git init && git add * && git commit -m=Publish && git checkout -b published && git remote add origin https://github.com/rg1220/FacebookMarketPlaceNationalSearch && git push -f -u origin published"
+    "publish": "cd ./dist/FacebookMarketPlaceNationalSearch && mkdir redirect && cp ./index.html ./redirect/index.html && git init && git add * && git commit -m=Publish && git checkout -b published && git remote add origin git@github.com:rg1220/FacebookMarketPlaceNationalSearch.git && git push -f -u origin published"
   },
   "private": true,
   "dependencies": {
