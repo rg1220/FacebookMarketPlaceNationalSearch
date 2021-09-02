@@ -35,11 +35,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       search: ['{YEAR} BMW M3', [Validators.required]],
       markets: this.marketsFormControl,
-      minYear: [2009, [Validators.required]],
-      maxYear: [2013, [Validators.required]],
+      minYear: [2001, [Validators.required]],
+      maxYear: [2006, [Validators.required]],
       minPrice: [null],
       maxPrice: [null],
-      daysSinceListed: [1]
+      daysSinceListed: [0]
     });
 
     this.form.controls.search.valueChanges.pipe(
